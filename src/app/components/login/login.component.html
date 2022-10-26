@@ -1,0 +1,19 @@
+<div class="container">
+	<form [formGroup]="theForm" class="login-container">
+		<mat-form-field fxFlex="100" appearance="outline" style="width: 100%;">
+			<mat-label>Username</mat-label>
+			<input autofocus="true" matInput formControlName="username" autocomplete="off">
+			<mat-error *ngIf="theForm.get('username').hasError('required')">Username is required</mat-error>
+		</mat-form-field>
+
+		<mat-form-field fxFlex="100" appearance="outline" style="width: 100%;">
+			<mat-label>Password</mat-label>
+			<input type="password" autofocus="true" matInput formControlName="password" autocomplete="off">
+			<mat-error *ngIf="theForm.get('password').hasError('required')">Password is required</mat-error>
+		</mat-form-field>
+
+		<button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="theForm.invalid">Submit</button>
+
+		<div *ngIf="invalidCredentials" class="error-msg">username and password does not match</div>
+	</form>
+</div>

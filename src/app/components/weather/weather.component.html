@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="left">
+        <mat-form-field fxFlex="100" appearance="outline" style="width: 60%;">
+			<mat-label>City</mat-label>
+			<input autofocus="true" matInput  [formControl]="city" autocomplete="off">
+		</mat-form-field>
+    </div>
+
+    <div class="right">
+        <div class="bar">
+            <span>Temperature</span> <span>{{ data?.main.temp | convertToCelcius | number : '1.2-2'}} °C</span>
+        </div>
+
+        <div class="bar">
+            <span>Feels</span> <span>{{ data?.main.feels_like | convertToCelcius | number : '1.2-2'}} °C</span>
+        </div>
+
+        <div class="bar">
+            <span>Min</span> <span>{{ data?.main.temp_min | convertToCelcius | number : '1.2-2'}} °C</span>
+        </div>
+
+        <div class="bar">
+            <span>Max</span> <span>{{ data?.main.temp_max | convertToCelcius | number : '1.2-2'}} °C</span>
+        </div>
+
+        <div class="bar">
+            <span>Humidity</span> <span>{{ data?.main.humidity}} %</span>
+        </div>
+
+        <div class="bar">
+            <span>Wind</span> <span>{{ data?.wind.speed}} Km/h</span>
+        </div>
+
+        <div class="bar">
+            <span>Pressure</span> <span>{{ data?.main.pressure}} mb</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<header class="header">
+	<mat-toolbar class="toolbar">
+		<nav class="nav">
+			<h1 class="app-title"> {{ title }} </h1>
+		</nav>
+
+		<div *ngIf="loggedIn" class="profile" [matMenuTriggerFor]="userMenu" >
+			<img src="assets/images/avatar.jpg" alt="Avatar" class="avatar">
+			<mat-icon style="cursor: pointer;">expand_more</mat-icon>
+		</div>
+		
+		<mat-menu #userMenu="matMenu">
+			<button class="logout-btn" mat-menu-item (click)="onLogout()">
+				 <mat-icon>logout</mat-icon>Logout
+			</button>
+		</mat-menu>
+
+		<mat-menu #mobileMenu="matMenu">
+			<nav class="mobile-nav">
+				<ul>
+					<li routerLink="tickets" routerLinkActive="active"> Tickets </li>
+					<li routerLink="users" routerLinkActive="active"> Users </li>
+				</ul>
+			</nav>
+		</mat-menu>
+	</mat-toolbar>
+</header>
