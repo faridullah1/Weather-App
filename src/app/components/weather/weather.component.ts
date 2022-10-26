@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WeatherService } from '../../service/weather.service';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { WeatherData } from 'src/app/models';
 
 
 @Component({
@@ -11,13 +12,23 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 })
 export class WeatherComponent implements OnInit 
 {
-	city = new FormControl('Islamabad');
-	data : any
+	city = new FormControl('');
+	data: WeatherData;
+	loading = false;
 
 	constructor(private service: WeatherService) { }
 
 	ngOnInit(): void {
-		this.geData('Islamabad');
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(pos => {
+				this.service.getWeatherData(pos.coords.latitude, pos.coords.longitude).subscribe({
+					next: (resp: any) => {
+						this.data = resp;
+						this.city.setValue(this.data.name);
+					}
+				});
+			});
+		}
 
 		this.city.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe((city: string) =>
         {
@@ -26,18 +37,30 @@ export class WeatherComponent implements OnInit
 	}
 
 	geData(city: string): void {
+		this.loading = true;
+
 		this.service.findLatLan(city).subscribe({
 			next: (resp: any) => {
+				this.loading = false;
+
 				if (resp.length > 0) {
 					const { lat, lon } = resp[0];
-
-					this.service.getWeatherData(lat, lon).subscribe({
-						next: (resp: any) => {
-							this.data = resp;
-						}
-					});
+					this.getWeatherData(lat, lon);					
 				}
-			}
+			},
+			error: () => this.loading = false
 		})
+	}
+
+	getWeatherData(lat: number, lan: number): void {
+		this.loading = true;
+
+		this.service.getWeatherData(lat, lan).subscribe({
+			next: (resp: any) => {
+				this.loading = false;
+				this.data = resp;
+			},
+			error: () => this.loading = false
+		});
 	}
 }
