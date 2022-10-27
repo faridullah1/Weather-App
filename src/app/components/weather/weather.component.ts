@@ -13,7 +13,7 @@ import { WeatherData } from 'src/app/models';
 export class WeatherComponent implements OnInit 
 {
 	city = new FormControl('');
-	data: WeatherData;
+	data: Partial<WeatherData>;
 	loading = false;
 
 	constructor(private service: WeatherService) { }

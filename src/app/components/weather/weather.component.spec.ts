@@ -1,29 +1,49 @@
+import { WeatherData } from 'src/app/models';
 import { HttpClientModule } from '@angular/common/http';
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { from } from 'rxjs';
 import { MaterialModule } from 'src/app/material/material.module';
 import { WeatherService } from 'src/app/service/weather.service';
 import { WeatherComponent } from './weather.component';
 
 
 describe('WeatherComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [
-		HttpClientModule,
-		MaterialModule,
-        RouterTestingModule,
-      ],
-      declarations: [
-        WeatherComponent
-      ],
-	  providers: [WeatherService]
-    }).compileComponents();
-  });
+	let app: WeatherComponent;
+	let fixture: ComponentFixture<WeatherComponent>;
+	let service: WeatherService;
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(WeatherComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+		imports: [
+			HttpClientModule,
+			MaterialModule,
+			RouterTestingModule,
+		],
+		declarations: [
+			WeatherComponent
+		],
+		providers: [WeatherService]
+		}).compileComponents();
+
+        fixture = TestBed.createComponent(WeatherComponent);
+		app = fixture.componentInstance;
+        service = TestBed.inject(WeatherService);
+	});
+
+	it('should create the app', () => {
+		expect(app).toBeTruthy();
+	});
+
+	it('Should set weather data obtain from OpenWeather', () => {
+		let data: Partial<WeatherData> = {};
+
+		spyOn(service, 'getWeatherData').and.callFake(() => {
+			return from([data]);
+		});
+
+		app.getWeatherData(1, 2);
+
+		expect(app.data).toBe(data);
+	});
 });

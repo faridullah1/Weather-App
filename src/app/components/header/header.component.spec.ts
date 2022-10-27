@@ -44,4 +44,12 @@ describe('HeaderComponent', () => {
 		const compiled = fixture.nativeElement as HTMLElement;
 		expect(compiled.querySelector('.app-title')?.textContent).toEqual('Weather App');
 	});
+
+	it('should display logout menu is user is logged In', () => {
+		localStorage.setItem('isLoggedIn', 'true');
+
+		component.ngOnInit();
+
+		expect(component.loggedIn).toBeTruthy();
+	});
 });
