@@ -9,10 +9,10 @@ import { WeatherService } from './service/weather.service';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WeatherComponent } from './components/weather/weather.component';
 import { PipeModule } from './pipes/pipe.module';
+import { LoginComponent } from './components/login/login.component';
 
 
 @NgModule({

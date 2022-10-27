@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { WeatherService } from '../../service/weather.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { WeatherService } from 'src/app/service/weather.service';
 
 
 @Component({
@@ -14,7 +14,9 @@ export class LoginComponent
 	theForm: FormGroup;
 	invalidCredentials = false;
 
-	constructor(private router: Router, private service: WeatherService) {
+	constructor(private service: WeatherService, 
+				private router: Router) 
+	{
 		this.theForm = new FormGroup({
 			username: new FormControl('', Validators.required),
 			password: new FormControl('', Validators.required)

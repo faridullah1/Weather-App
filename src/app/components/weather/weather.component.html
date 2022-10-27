@@ -7,7 +7,7 @@
     </div>
 
     <div class="right">
-		<mat-spinner *ngIf="loading; else tempData"></mat-spinner>
+		<mat-spinner *ngIf="loading; else tempData" [diameter]="60"></mat-spinner>
 
 		<ng-template #tempData>
 			<div class="bar">
